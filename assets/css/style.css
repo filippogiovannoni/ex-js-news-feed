@@ -1,0 +1,38 @@
+:root {
+    --main-blue: #023047;
+    --alert-blue: #000080;
+    --main-purple:#800080;
+}
+
+#site_main, #site_footer{
+    background-color: var(--main-blue);
+}
+
+.container_5 {
+    width: 50%;
+    margin: auto;
+}
+
+.fs_12 {
+    font-size: 12px;
+}
+
+.title i {
+    color: var(--main-blue);
+}
+
+#site_main {
+    padding: 1rem 0;
+}
+
+.article {
+    background-color: white;
+}
+
+.bg_purple {
+    background-color: var(--main-purple);
+}
+
+.bg_alert_blue {
+    background-color: var(--alert-blue);
+}
