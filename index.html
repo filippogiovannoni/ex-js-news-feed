@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS - News Feed</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-    
 
-    <header id="site_header"></header>
+<body>
+
+
+    <header id="site_header">
+        <div class="container_5">
+            <h1 class="text-center fw-bold text-white mb-3 pt-3">News Feed</h1>
+            <div class="filters d-flex justify-content-between bg-white p-3">
+                <div class="filters-left">
+                    <span>Filtra per tags:</span>
+                    <select name="tags" id="tags">
+                        <option value="allTags" id="allTags" selected>Tutti i tags</option>
+                        <option value="politica" id="politica">Politica</option>
+                        <option value="geo" id="geo">Geo</option>
+                        <option value="tech" id="tech">Tech</option>
+                        <option value="viaggi" id="viaggi">Viaggi</option>
+                        <option value="cucina" id="cucina">Cucina</option>
+                    </select>
+                </div>
+                <div class="filters-right">
+                    <input type="checkbox" name="saved_news" id="saved_news">
+                    <span>Solo news salvate</span>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- /#site_header -->
 
 
     <main id="site_main">
         <div class="container_5">
             <div class="news">
-             
+
             </div>
         </div>
     </main>
@@ -31,4 +57,5 @@
 
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>

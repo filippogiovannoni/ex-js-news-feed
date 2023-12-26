@@ -4,7 +4,7 @@
     --main-purple:#800080;
 }
 
-#site_main, #site_footer{
+#site_header, #site_main, #site_footer{
     background-color: var(--main-blue);
 }
 
