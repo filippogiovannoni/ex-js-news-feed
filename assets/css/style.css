@@ -1,10 +1,12 @@
 :root {
     --main-blue: #023047;
     --alert-blue: #000080;
-    --main-purple:#800080;
+    --main-purple: #800080;
 }
 
-#site_header, #site_main, #site_footer{
+#site_header,
+#site_main,
+#site_footer {
     background-color: var(--main-blue);
 }
 
@@ -25,7 +27,7 @@
     padding: 1rem 0;
 }
 
-.article {
+[class^="card-"] {
     background-color: white;
 }
 
