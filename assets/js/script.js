@@ -65,6 +65,8 @@ const newsWrapperEl = document.querySelector('.news')
 renderNews(newsList, newsWrapperEl);
 // Coloro tramite la funzione tutti i tag
 colorTag();
+// Rendo cliccabile il bookmark
+selectBookmark();
 
 // Salvo in una variabile il select
 const selectTagsEl = document.getElementById('tags');
@@ -87,6 +89,17 @@ selectTagsEl.addEventListener('change', function (e) {
     renderNews(filteredNews, newsWrapperEl);
     // Coloro tramite la funzione i tag delle news filtrate
     colorTag();
+
+    // Se il valore del select è politica
+    if (e.target.value === 'politica') {
+
+        // Viene mostrato in pagina che non ci sono news disponibiliß
+        newsWrapperEl.innerHTML = `<h2 class="text-white">No news available.</h2>`
+        document.body.style.backgroundColor = '#023047'
+    }
+
+    // Rendo cliccabile il bookmark
+    selectBookmark();
 })
 
 
@@ -175,4 +188,28 @@ function formatDate(dateInput) {
     const dataOutput = `${dataSplitted[2]}/${dataSplitted[1]}/${dataSplitted[0]}`;
 
     return dataOutput;
+}
+
+/**
+ * Makes clickable the news bookmark
+ */
+function selectBookmark() {
+    // Salvo in una variabile gli elementi i
+    const iElements = document.querySelectorAll('i');
+
+    // Itero all'interno degli elementi i
+    iElements.forEach(iEl => {
+
+        // Al click dell'i (bookmark) viene aggiunta o rimossa una classe
+        iEl.addEventListener('click', function () {
+            iEl.classList.remove('fa-regular')
+            iEl.classList.add('fa-solid')
+        })
+    })
+
+    // Salvo in una variabile la i della card-1
+    const duckCardIEl = document.querySelector('.card-1 i');
+
+    // Aggiungo la classe per avere sempre selezionato il bookmark
+    duckCardIEl.classList.add('fa-solid')
 }
