@@ -177,6 +177,41 @@ checkboxEl.addEventListener('change', function(){
     
 })
 
+// Opzioni di filtraggio per news salvate
+
+// Quando il checkbox è selezionato e il valore del select cambia
+checkboxEl.addEventListener('change', function(e){
+    if (checkboxEl.checked) {
+        selectTagsEl.addEventListener('change', function(e){
+
+            // Converto il set in un array
+            savedNewsArray = [...savedNews] 
+
+            // Salvo il una variabile l'array di news salvate e filtrate
+            const filteredSavedNews = savedNewsArray.filter(news => {
+                return (news.tags).includes(e.target.value) || e.target.value === 'allTags';
+            })
+            console.log(filteredSavedNews);
+
+            // Svuoto il wrapper
+            newsWrapperEl.innerHTML = ''
+
+            // Inserisco nel wrapper le news salvate e filtrate
+            renderNews(filteredSavedNews, newsWrapperEl)
+            selectBookmark()
+            colorTag()
+
+            // Se l'array delle news salvate e filtrate è vuoto
+            if (filteredSavedNews.length === 0) {
+
+                // Viene stampato in pagina che non ci sono news disponibili
+                newsWrapperEl.innerHTML = `<h2 class="text-white">No saved news available.</h2>`
+                document.body.style.backgroundColor = '#023047'
+            }
+        })
+    }
+})
+
 
 /**
  * Generate the markup for a news card
