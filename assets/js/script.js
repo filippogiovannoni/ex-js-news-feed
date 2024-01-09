@@ -108,6 +108,33 @@ selectTagsEl.addEventListener('change', function (e) {
 })
 
 
+
+// Creo l'array e lo inserisco in un set, dove posso salvare le news col bookmark selezionato senza duplicati
+const savedNews = new Set([newsList[0]]);
+
+// Salvo in una variabile tutti i bookmark
+const bookmarks = document.querySelectorAll('.fa-bookmark');
+
+
+bookmarks.forEach(bookmark => {
+    // Al click di ogni bookmark
+    bookmark.addEventListener('click', function(){
+
+        // Salvo in una variabile il data attribute del bookmark
+        const cardId = bookmark.getAttribute('data-id')
+
+        const card = newsList.find(news => news.id === cardId);
+
+        // Se la card non è presente nell'array viene aggiunta, altrimenti no
+        if (card) {
+            savedNews.add(card)
+            console.log(savedNews);
+        }
+        
+    })
+})
+
+
 /**
  * Generate the markup for a news card
  * @param {object} news The news object
