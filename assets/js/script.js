@@ -68,6 +68,8 @@ colorTag();
 // Rendo cliccabile il bookmark
 selectBookmark();
 
+firstBookmark(newsList)
+
 // Salvo in una variabile il select
 const selectTagsEl = document.getElementById('tags');
 
@@ -93,13 +95,16 @@ selectTagsEl.addEventListener('change', function (e) {
     // Se il valore del select è politica
     if (e.target.value === 'politica') {
 
-        // Viene mostrato in pagina che non ci sono news disponibiliß
+        // Viene mostrato in pagina che non ci sono news disponibili
         newsWrapperEl.innerHTML = `<h2 class="text-white">No news available.</h2>`
         document.body.style.backgroundColor = '#023047'
     }
 
     // Rendo cliccabile il bookmark
     selectBookmark();
+    // Al bookmark della prima news aggiungo la classe per renderlo pieno
+    firstBookmark(filteredNews)
+
 })
 
 
@@ -111,10 +116,10 @@ selectTagsEl.addEventListener('change', function (e) {
 function generateCard(news) {
 
     const cardMarkup = `
-        <div class="card-${news.id} my-3 p-3">
+        <div class="card-${news.id} my-3 p-3" data-id="${news.id}">
         <div class="title d-flex justify-content-between">
         <h1 class="text-start fs-3 mb-0">${news.title}</h1>
-        <i class="btn border border-0 fa-regular fa-bookmark ms-5 fs-4"></i>
+        <i id="bookmark-${news.id}" class="btn border border-0 fa-regular fa-bookmark ms-5 fs-4" data-id="${news.id}"></i>
         </div>
             <h6 class="text-start mb-0">pubblicato da ${news.author}</h6>
             <span class="fs_12">in data ${formatDate(news.published)}</span>
@@ -206,10 +211,14 @@ function selectBookmark() {
             iEl.classList.add('fa-solid')
         })
     })
+}
 
-    // Salvo in una variabile la i della card-1
-    const duckCardIEl = document.querySelector('.card-1 i');
+function firstBookmark(list) {
 
-    // Aggiungo la classe per avere sempre selezionato il bookmark
-    duckCardIEl.classList.add('fa-solid')
+    if (list[0].id === '1') {
+        
+        const firstNewsBookmark = document.getElementById('bookmark-1')
+        
+        firstNewsBookmark.classList.add('fa-solid')
+    }
 }
