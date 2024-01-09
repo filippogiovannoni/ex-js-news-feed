@@ -134,6 +134,49 @@ bookmarks.forEach(bookmark => {
     })
 })
 
+// Salvo in una variabile il checkbox
+const checkboxEl = document.getElementById('saved_news')
+
+// Al cambio di valore del checkbox
+checkboxEl.addEventListener('change', function(){
+    // Se il checkbox è selezionato
+    if (checkboxEl.checked) {
+        // Svuoto il wrapper
+        newsWrapperEl.innerHTML = ''
+
+        // Tramite la funzione inserisco nel wrapper le news salvate
+        renderNews(savedNews, newsWrapperEl)
+        // Coloro i tag
+        colorTag()
+        // Rendo cliccabili i bookmark
+        selectBookmark()
+
+        // Salvo in una variabile tutti gli i
+        const iElements = document.querySelectorAll('i')
+        iElements.forEach(iEl => {
+            // Aggiungo ad ogni i salvato la classe
+            iEl.classList.add('fa-solid')
+        })
+
+        console.log(savedNews);
+
+        // Altrimenti quando il checkbox non è selezionato
+    } else {
+
+        // Svuoto il wrapper
+        newsWrapperEl.innerHTML = ''
+
+        // Inserisco nel wrapper tutte le news
+        renderNews(newsList, newsWrapperEl)
+        colorTag()
+        selectBookmark()
+        // Rendo selezionato il primo bookmark 
+        firstBookmark(newsList)
+
+    }
+    
+})
+
 
 /**
  * Generate the markup for a news card
