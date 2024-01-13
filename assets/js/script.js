@@ -73,66 +73,11 @@ firstBookmark(newsList)
 // Salvo in una variabile il select
 const selectTagsEl = document.getElementById('tags');
 
-// Al variare del valore all'interno del select viene scatenata la funzione
-selectTagsEl.addEventListener('change', function (e) {
-
-    // Seleziono il wrapper dove inserire le card
-    const newsWrapperEl = document.querySelector('.news');
-
-    // Svuoto il wrapper
-    newsWrapperEl.innerHTML = '';
-
-    // Salvo in un array le news filtrate in base al tag selezionato
-    const filteredNews = newsList.filter(news => {
-        return (news.tags).includes(e.target.value) || e.target.value === 'allTags';
-    })
-
-    // Inserisco tramite la funzione l'array di news filtrate all'interno del wrapper
-    renderNews(filteredNews, newsWrapperEl);
-    // Coloro tramite la funzione i tag delle news filtrate
-    colorTag();
-
-    // Se il valore del select è politica
-    if (e.target.value === 'politica') {
-
-        // Viene mostrato in pagina che non ci sono news disponibili
-        newsWrapperEl.innerHTML = `<h2 class="text-white">No news available.</h2>`
-        document.body.style.backgroundColor = '#023047'
-    }
-
-    // Rendo cliccabile il bookmark
-    selectBookmark();
-    // Al bookmark della prima news aggiungo la classe per renderlo pieno
-    firstBookmark(filteredNews)
-
-})
-
-
+filterNewsByTag()
 
 // Creo l'array e lo inserisco in un set, dove posso salvare le news col bookmark selezionato senza duplicati
 const savedNews = new Set([newsList[0]]);
-
-// Salvo in una variabile tutti i bookmark
-const bookmarks = document.querySelectorAll('.fa-bookmark');
-
-
-bookmarks.forEach(bookmark => {
-    // Al click di ogni bookmark
-    bookmark.addEventListener('click', function(){
-
-        // Salvo in una variabile il data attribute del bookmark
-        const cardId = bookmark.getAttribute('data-id')
-
-        const card = newsList.find(news => news.id === cardId);
-
-        // Se la card non è presente nell'array viene aggiunta, altrimenti no
-        if (card) {
-            savedNews.add(card)
-            console.log(savedNews);
-        }
-        
-    })
-})
+addToSavedNews()
 
 // Salvo in una variabile il checkbox
 const checkboxEl = document.getElementById('saved_news')
@@ -151,12 +96,7 @@ checkboxEl.addEventListener('change', function(){
         // Rendo cliccabili i bookmark
         selectBookmark()
 
-        // Salvo in una variabile tutti gli i
-        const iElements = document.querySelectorAll('i')
-        iElements.forEach(iEl => {
-            // Aggiungo ad ogni i salvato la classe
-            iEl.classList.add('fa-solid')
-        })
+        bookmarkedNews()
 
         console.log(savedNews);
 
@@ -200,6 +140,7 @@ checkboxEl.addEventListener('change', function(e){
             renderNews(filteredSavedNews, newsWrapperEl)
             selectBookmark()
             colorTag()
+            bookmarkedNews()
 
             // Se l'array delle news salvate e filtrate è vuoto
             if (filteredSavedNews.length === 0) {
@@ -209,6 +150,8 @@ checkboxEl.addEventListener('change', function(e){
                 document.body.style.backgroundColor = '#023047'
             }
         })
+    } else {
+        filterNewsByTag()
     }
 })
 
@@ -305,19 +248,22 @@ function formatDate(dateInput) {
  */
 function selectBookmark() {
     // Salvo in una variabile gli elementi i
-    const iElements = document.querySelectorAll('i');
+    const iElements = document.querySelectorAll('.title > i');
 
     // Itero all'interno degli elementi i
-    iElements.forEach(iEl => {
+    iElements.forEach(element => {
 
         // Al click dell'i (bookmark) viene aggiunta o rimossa una classe
-        iEl.addEventListener('click', function () {
-            iEl.classList.remove('fa-regular')
-            iEl.classList.add('fa-solid')
+        element.addEventListener('click', function (e) {
+            element.classList.add('fa-solid');
         })
     })
 }
 
+/**
+ * Makes bookmarked the first news of the array
+ * @param {Array} list The array of news
+ */
 function firstBookmark(list) {
 
     if (list[0].id === '1') {
@@ -326,4 +272,87 @@ function firstBookmark(list) {
         
         firstNewsBookmark.classList.add('fa-solid')
     }
+}
+
+/**
+ * Add the class fa-solid to the saved news when the checkbox is "on"
+ */
+function bookmarkedNews() {
+    // Salvo in una variabile tutti gli i
+    const iElements = document.querySelectorAll('i')
+    iElements.forEach(iEl => {
+        // Aggiungo ad ogni i salvato la classe
+        iEl.classList.add('fa-solid')
+    })
+}
+
+/**
+ * When the bookmark is clicked, the news is saved into the array of saved news.
+ */
+function addToSavedNews() {
+
+// Salvo in una variabile tutti i bookmark
+const bookmarks = document.querySelectorAll('.fa-bookmark');
+
+
+bookmarks.forEach(bookmark => {
+    // Al click di ogni bookmark
+    bookmark.addEventListener('click', function(){
+
+        selectBookmark()
+
+        // Salvo in una variabile il data attribute del bookmark
+        const cardId = bookmark.getAttribute('data-id')
+
+        const card = newsList.find(news => news.id === cardId);
+
+        // Se la card non è presente nell'array viene aggiunta, altrimenti no
+        if (card) {
+            savedNews.add(card)
+            console.log(savedNews);
+        }
+        
+    })
+})
+}
+
+/**
+ * Makes news filterable via tags and insertable on the page
+ */
+function filterNewsByTag() {
+    // Al variare del valore all'interno del select viene scatenata la funzione
+selectTagsEl.addEventListener('change', function (e) {
+
+    // Seleziono il wrapper dove inserire le card
+    const newsWrapperEl = document.querySelector('.news');
+
+    // Svuoto il wrapper
+    newsWrapperEl.innerHTML = '';
+
+    // Salvo in un array le news filtrate in base al tag selezionato
+    const filteredNews = newsList.filter(news => {
+        return (news.tags).includes(e.target.value) || e.target.value === 'allTags';
+    })
+
+    // Inserisco tramite la funzione l'array di news filtrate all'interno del wrapper
+    renderNews(filteredNews, newsWrapperEl);
+    // Coloro tramite la funzione i tag delle news filtrate
+    colorTag();
+
+    // Se il valore del select è politica
+    if (e.target.value === 'politica') {
+
+        // Viene mostrato in pagina che non ci sono news disponibili
+        newsWrapperEl.innerHTML = `<h2 class="text-white">No news available.</h2>`
+        document.body.style.backgroundColor = '#023047'
+    }
+
+    // Rendo cliccabile il bookmark
+    selectBookmark();
+    // Al bookmark della prima news aggiungo la classe per renderlo pieno
+    firstBookmark(filteredNews)
+
+    addToSavedNews()
+
+})
 }
